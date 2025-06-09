@@ -1,29 +1,39 @@
 pipeline {
     agent any
 
+    environment {
+        REPO_URL = 'https://github.com/ajith1251/experiment5.git'
+        BRANCH = 'main'
+    }
+
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/ajith1251/experiment5.git'
+                git branch: "${BRANCH}", url: "${REPO_URL}"
             }
         }
 
         stage('Build') {
             steps {
-                sh 'echo "Build step goes here"'
+                echo 'Running build...'
+                // put your build commands here (e.g. compile, npm install, etc.)
             }
         }
 
         stage('Test') {
             steps {
-                sh 'echo "Test step goes here"'
+                echo 'Running tests...'
+                // put your test commands here
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'echo "Deploy step goes here"'
+                echo 'Deploying app...'
+                sh 'nohup python3 -m http.server 8000 &'
             }
         }
     }
 }
+
+
